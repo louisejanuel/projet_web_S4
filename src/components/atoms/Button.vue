@@ -70,7 +70,7 @@ const classes = computed(() => {
 
 .btn--full {
   width: 100%;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .btn--primary {
