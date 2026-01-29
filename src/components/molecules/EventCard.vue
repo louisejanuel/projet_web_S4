@@ -3,17 +3,16 @@ import Typography from '@/components/atoms/Typography.vue'
 import Button from '@/components/atoms/Button.vue'
 import RemoteImage from '@/components/atoms/RemoteImage.vue'
 import SaveButton from '@/components/atoms/SaveButton.vue'
-import Separator from '@/components/atoms/Separator.vue' // Import du nouvel atome
+import Separator from '@/components/atoms/Separator.vue'
 import { ICONS } from '@/constants/icons'
 
 const props = defineProps({
   title: String,
-  subtitle: String,
-  date: String,
+  subtitle: String, // Ce sera l'Auteur
   imageUrl: String,
   description: {
     type: String,
-    default: "Cet événement exceptionnel réunit les plus grands talents de la scène actuelle pour une soirée inoubliable. Venez vibrer au rythme de la musique dans une ambiance électrique. Une expérience unique à vivre en live..."
+    default: "Aucune description disponible pour ce livre."
   },
   isFavorite: Boolean
 })
@@ -22,20 +21,16 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 </script>
 
 <template>
-  <article class="event-card">
+  <article class="book-card">
     
     <div class="card-content-wrapper">
       <div class="card-body">
         
         <div class="card-visual">
           <div class="img-container">
-            <RemoteImage :src="imageUrl" :alt="title" aspect-ratio="1/1.3" />
+            <RemoteImage :src="imageUrl" :alt="title" aspect-ratio="1/1.5" />
           </div>
-          
-          <Typography tag="span" variant="caption" bold class="date-text">
-            {{ date }}
-          </Typography>
-        </div>
+          </div>
 
         <div class="card-info">
           <div class="header-row">
@@ -43,9 +38,8 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
                <h3 class="title-flat">{{ title }}</h3>
               
               <div class="subtitle-flat">
-                <component :is="ICONS.location" :size="16" />
-                <Typography tag="span" variant="caption" style="line-height: 1;">
-                  {{ subtitle }}
+                <Typography tag="span" variant="caption" style="font-family: monospace; font-size: 0.9rem;">
+                  De <span style="text-decoration: underline;">{{ subtitle }}</span>
                 </Typography>
               </div>
             </div>
@@ -66,41 +60,41 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
           class="flat-button" 
           @click="emit('clickDetail')"
         >
-          VOIR DÉTAILS
+          LIRE UN EXTRAIT
         </Button>
       </div>
 
       <div class="card-footer">
         <button class="footer-action">
-          <component :is="ICONS.share" size="18" />
-          Partager
+          <component :is="ICONS.ticket" size="18" /> 
+          Acheter
         </button>
 
-        <button class="footer-action" @click="emit('clickDetail')">
-          <component :is="ICONS.ticket" size="18" />
-          Réserver
+        <button class="footer-action">
+          <component :is="ICONS.bookmark" size="18" />
+          Ajouter à ma liste
         </button>
       </div>
     </div>
 
-    <Separator margin="1rem 0 0 0" />
+    <Separator margin="2rem 0 0 0" />
 
   </article>
 </template>
 
 <style scoped>
-/* --- CONTENEUR GLOBAL --- */
-.event-card {
+/* --- CONTENEUR --- */
+.book-card {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem; 
 }
 
 .card-content-wrapper {
-  padding: 0 0.5rem; /* Petite marge de sécurité latérale */
+  padding: 0 0.5rem;
 }
 
-/* --- ÉTAGE 1 : BODY --- */
+/* --- BODY --- */
 .card-body {
   display: flex;
   gap: 1.5rem;
@@ -109,23 +103,18 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 
 /* Visuel */
 .card-visual {
-  width: 110px; 
+  width: 100px; /* Largeur fixe livre */
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0; 
 }
 
 .img-container {
   width: 100%;
-  background: transparent;
-}
-
-.date-text {
-  font-family: monospace;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  background: #eee; 
+  /* Ombre portée simple pour donner du volume au livre */
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.1); 
 }
 
 /* Infos */
@@ -147,43 +136,41 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 }
 
 .title-flat {
-  margin: 0 0 8px 0;
-  font-family: 'Montserrat', sans-serif;
+  margin: 0 0 4px 0;
+  font-family: 'Montserrat', sans-serif; /* Ou une font Serif pour faire plus "Livre" */
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   line-height: 1.2;
-  height: 2.4em;
+  
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .subtitle-flat {
-  display: flex;       /* Flexbox activé */
-  align-items: center; /* Centrage vertical */
-  gap: 6px;           /* Espace entre icone et texte */
-  color: #333;
+  color: #444;
+  margin-bottom: 0.5rem;
 }
 
 .desc-flat {
-  margin-top: 1rem;
-  font-family: monospace;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  margin-top: 0.5rem;
+  font-family: monospace; /* Style machine à écrire */
+  font-size: 0.85rem;
+  line-height: 1.6;
   color: #333;
   display: -webkit-box;
-  -webkit-line-clamp: 5; 
+  -webkit-line-clamp: 4; /* Limite à 4 lignes */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* --- ÉTAGE 2 : BOUTON --- */
+/* --- BOUTON --- */
 .main-action-area {
-  margin-bottom: 0.75rem; 
+  margin-bottom: 1rem; 
 }
 
+/* Force le style Flat Orange */
 :deep(.flat-button) {
   border-radius: 0 !important;
   box-shadow: none !important;
@@ -192,21 +179,20 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
   background-color: #FF8F50; 
   color: #000;
   text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
   font-size: 1rem;
 }
-
 :deep(.flat-button:hover) {
   background-color: #ff7b2e;
-  transform: none !important;
 }
 
-/* --- ÉTAGE 3 : FOOTER --- */
+/* --- FOOTER --- */
 .card-footer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between; /* Espace max entre les 2 boutons */
   align-items: center;
+  padding: 0 1rem; /* Un peu de marge interne */
 }
 
 .footer-action {
@@ -214,7 +200,7 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
   border: none;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   display: flex;
   align-items: center;
@@ -225,23 +211,16 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 }
 
 .footer-action:hover {
-  opacity: 0.6;
+  text-decoration: underline;
 }
 
-/* --- RESPONSIVE --- */
+/* Mobile */
 @media (max-width: 600px) {
   .card-body {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row; /* On garde l'alignement cote à cote même sur mobile pour les livres */
   }
   .card-visual {
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .img-container {
-    width: 80px;
+    width: 80px; /* Un peu plus petit sur mobile */
   }
 }
 </style>

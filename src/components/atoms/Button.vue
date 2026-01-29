@@ -7,7 +7,7 @@ const props = defineProps({
   iconName: { type: String, default: null },
   variant: {
     type: String,
-    default: 'primary',
+    default: 'primary', // primary, nav, link (NOUVEAU), ghost
   },
   isActive: { type: Boolean, default: false },
   fullWidth: { type: Boolean, default: false }
@@ -37,14 +37,13 @@ const classes = computed(() => {
       :size="20" 
       stroke-width="2.5"
     />
-    
     <span v-if="label" class="btn-label">{{ label }}</span>
-    
     <slot />
   </button>
 </template>
 
 <style scoped>
+/* --- BASE (inchangé) --- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -56,7 +55,8 @@ const classes = computed(() => {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 2px solid #000; 
+  /* Valeurs par défaut pour les boutons "solides" */
+  border: 2px solid #000;
   box-shadow: 4px 4px 0px #000;
   background: white;
   color: black;
@@ -73,6 +73,7 @@ const classes = computed(() => {
   justify-content: center;
 }
 
+/* --- VARIANTE : PRIMARY (inchangé) --- */
 .btn--primary {
   background-color: #FF8F50; 
 }
@@ -80,6 +81,7 @@ const classes = computed(() => {
   background-color: #ff7b2e;
 }
 
+/* --- VARIANTE : NAV (Sidebar - tu peux garder ou supprimer si tu n'utilises plus) --- */
 .btn--nav {
   border: 2px solid transparent;
   box-shadow: none;
@@ -88,16 +90,45 @@ const classes = computed(() => {
   justify-content: flex-start;
   padding-left: 20px;
 }
-
 .btn--nav:hover {
   background-color: rgba(0,0,0, 0.05);
   border: 2px solid #000;
 }
-
 .btn--nav.btn--active {
   background-color: #fff;
   border: 2px solid #000;
   box-shadow: 4px 4px 0px #000;
 }
 
+/* --- NOUVELLE VARIANTE : LINK (Header Classique) --- */
+.btn--link {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #666; /* Gris quand inactif */
+  padding: 0.5rem 0; /* Padding vertical réduit */
+  margin: 0 1rem;    /* Espacement entre les liens */
+  position: relative; /* Pour gérer la ligne */
+}
+
+.btn--link:hover {
+  color: #000;
+  transform: none; /* Pas de mouvement au survol */
+  box-shadow: none;
+}
+
+.btn--link:active {
+  transform: none;
+  box-shadow: none;
+}
+
+/* L'état Actif : Texte noir + Ligne épaisse en dessous */
+.btn--link.btn--active {
+  color: #000;
+  /* On utilise border-bottom pour l'effet souligné */
+  border-bottom: 3px solid #000; 
+  /* On annule les styles par défaut */
+  box-shadow: none;
+  background: transparent;
+}
 </style>
