@@ -31,7 +31,8 @@ import {
   Image,
   Phone,
   Utensils,
-  Bookmark
+  Bookmark,
+  CircleX
 } from 'lucide-vue-next';
 
 export const ICONS = {
@@ -44,6 +45,7 @@ export const ICONS = {
   arrowRight: ArrowRight,
   arrowDown: ArrowDown,
   check: Check,
+  close: CircleX,
 
   // --- Actions ---
   search: Search,

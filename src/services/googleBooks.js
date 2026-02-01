@@ -17,22 +17,24 @@ export const fetchBooks = async (query, startIndex = 0, maxResults = 40) => {
 
     if (!response.data.items) return []
 
+    // Dans src/services/googleBooks.js
+
     return response.data.items.map(item => ({
       id: item.id,
       title: item.volumeInfo.title || 'Titre inconnu',
-      
-      // --- CHANGEMENT ICI : On récupère les auteurs ---
-      // S'il y a des auteurs, on les joint avec une virgule. Sinon, "Auteur inconnu".
       subtitle: item.volumeInfo.authors?.join(', ') || 'Auteur inconnu',
-      // -----------------------------------------------
-
       description: item.volumeInfo.description || '',
       image: item.volumeInfo.imageLinks?.thumbnail 
-             || item.volumeInfo.imageLinks?.smallThumbnail 
-             || 'https://via.placeholder.com/150?text=No+Cover',
-      bookingUrl: item.volumeInfo.infoLink || item.saleInfo?.buyLink,
+            || item.volumeInfo.imageLinks?.smallThumbnail 
+            || 'https://via.placeholder.com/150?text=No+Cover',
+      bookingUrl: item.volumeInfo.previewLink || item.volumeInfo.infoLink, // Lien pour la preview
+      publisher: item.volumeInfo.publisher || 'Éditeur inconnu',
+      publishedDate: item.volumeInfo.publishedDate || 'Date inconnue',
+      rating: item.volumeInfo.averageRating || 0, // Note moyenne (ex: 4.5)
+      ratingCount: item.volumeInfo.ratingsCount || 0, // Nombre d'avis
+      pageCount: item.volumeInfo.pageCount || 0,
       isFav: false
-    }))
+  }))
 
   } catch (error) {
     console.error('❌ ERREUR API :', error)

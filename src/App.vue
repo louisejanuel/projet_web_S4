@@ -1,43 +1,32 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { fetchBooks } from '@/services/googleBooks' 
 import Typography from './components/atoms/Typography.vue'
 import Button from './components/atoms/Button.vue'
+// IMPORT DU NOUVEAU COMPOSANT
+import SearchBar from './components/atoms/SearchBar.vue' 
 import EventCard from './components/molecules/EventCard.vue'
+import BookDetailPanel from './components/organisms/BookDetailPanel.vue'
 
 // --- DONNÉES ---
 const books = ref([]) 
 const isLoading = ref(false)
+const searchQuery = ref('') 
 
 // --- PAGINATION ---
-const currentPage = ref(0)       // Page actuelle (commence à 0)
-const maxResults = 40         // Maximum autorisé par l'API Google
-const totalItems = ref(0)        // (Optionnel) pour savoir si on peut encore avancer
+const currentPage = ref(0)
+const maxResults = 40
 
-// Fonction de chargement principale
+// --- LOGIQUE DE RECHERCHE ---
 const loadBooks = async () => {
   isLoading.value = true
-  
-  // Calcul de l'index de départ (ex: page 0 = 0, page 1 = 40, page 2 = 80...)
   const startIndex = currentPage.value * maxResults
+  const query = searchQuery.value.trim() || 'subject:fiction'
   
-  // Requête "*" = tout chercher. 
-  // On passe startIndex et maxResults à la fonction fetchBooks
   try {
-    const query = 'subject:fiction'
     const data = await fetchBooks(query, startIndex, maxResults)
-    // Selon comment est fait ton service, adapte ici. 
-    // Si fetchBooks renvoie directement un tableau :
     books.value = data || []
-
-    // Remonter en haut de page
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  
-    isLoading.value = false
-    
-    // Si tu veux gérer le scroll vers le haut à chaque changement de page
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-    
   } catch (e) {
     console.error(e)
     books.value = []
@@ -46,9 +35,19 @@ const loadBooks = async () => {
   isLoading.value = false
 }
 
-// Navigation
+const handleSearch = () => {
+  currentPage.value = 0 
+  loadBooks()
+  currentTab.value = 'explorer'
+}
+
+const clearSearch = () => {
+  searchQuery.value = ''
+  handleSearch() 
+}
+
+// Navigation Pagination
 const nextPage = () => {
-  // On n'avance que s'il y a des livres sur la page actuelle
   if (books.value.length > 0) {
     currentPage.value++
     loadBooks()
@@ -62,7 +61,6 @@ const prevPage = () => {
   }
 }
 
-// Au chargement
 onMounted(() => {
   loadBooks()
 })
@@ -81,8 +79,16 @@ const toggleFav = (id) => {
   if (book) book.isFav = !book.isFav
 }
 
-const openPreview = (url) => {
-  if (url) window.open(url, '_blank')
+const selectedBook = ref(null)
+const isPanelOpen = ref(false)
+
+const openDetail = (book) => {
+  selectedBook.value = book
+  isPanelOpen.value = true
+}
+
+const closeDetail = () => {
+  isPanelOpen.value = false
 }
 </script>
 
@@ -91,10 +97,20 @@ const openPreview = (url) => {
     
     <header class="main-header">
       <div class="header-left">
-        <img src="./assets/logo_tickest.png" alt="Tickest" class="logo-img" />
+        <img src="./assets/logo_book.png" alt="Dog-eared page" class="logo-img" />
       </div>
 
       <div class="header-right">
+        
+        <div class="search-container">
+          <SearchBar 
+            v-model="searchQuery" 
+            placeholder="Rechercher un livre, un auteur..." 
+            @search="handleSearch"
+            @clear="clearSearch"
+          />
+        </div>
+
         <nav class="top-nav">
           <Button 
             v-for="item in menuItems" 
@@ -113,12 +129,14 @@ const openPreview = (url) => {
         
         <div v-if="currentTab === 'explorer'">
           <div class="explorer-header">
-            <Typography tag="h2" variant="h2">Explorer la bibliothèque</Typography>
+            <Typography tag="h2" variant="h2">
+              {{ searchQuery ? `Résultats pour "${searchQuery}"` : 'Explorer la bibliothèque' }}
+            </Typography>
             <Typography tag="p" variant="body">Page {{ currentPage + 1 }}</Typography>
           </div>
 
           <div v-if="isLoading" class="loader-container">
-            <Typography tag="h3" variant="h3">Chargement des livres...</Typography>
+            <Typography tag="h3" variant="h3">Chargement...</Typography>
           </div>
 
           <div v-else class="books-wrapper">
@@ -133,7 +151,7 @@ const openPreview = (url) => {
                 :description="book.description"
                 :isFavorite="book.isFav"
                 @toggleFavorite="toggleFav(book.id)"
-                @clickDetail="openPreview(book.bookingUrl)"
+                @clickDetail="openDetail(book)" 
               />
             </div>
 
@@ -150,10 +168,10 @@ const openPreview = (url) => {
               </Typography>
 
               <Button 
-              label="Suivant" 
-              variant="secondary" 
-              :disabled="books.length === 0 || isLoading"
-              @click="nextPage"
+                label="Suivant" 
+                variant="secondary" 
+                :disabled="books.length === 0 || isLoading"
+                @click="nextPage"
               />
             </div>
           </div>
@@ -164,7 +182,7 @@ const openPreview = (url) => {
         </div>
 
         <div v-if="currentTab === 'home'">
-          <Typography tag="h2" variant="h2">Bienvenue sur Tickest Books</Typography>
+          <Typography tag="h2" variant="h2">Bienvenue sur The Dog-Eared Page</Typography>
         </div>
         <div v-if="currentTab === 'saved'">
           <Typography tag="h2" variant="h2">Ma Liste de lecture</Typography>
@@ -173,11 +191,17 @@ const openPreview = (url) => {
       </div>
     </main>
 
+    <BookDetailPanel 
+      :isOpen="isPanelOpen" 
+      :book="selectedBook" 
+      @close="closeDetail"
+      @toggleFavorite="toggleFav"
+    />
+
   </div>
 </template>
 
 <style>
-/* CSS Global */
 html, body {
   margin: 0;
   padding: 0;
@@ -197,8 +221,7 @@ html, body {
 
 /* --- HEADER --- */
 .main-header {
-  height: 80px;
-  background-color: #FDF6E3;
+  background-color: #AAD7B8;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -208,8 +231,20 @@ html, body {
 }
 
 .header-left .logo-img {
-  height: 50px;
+  height: 120px; 
   object-fit: contain;
+  position: relative;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem; 
+}
+
+/* On donne une largeur fixe au conteneur de la barre de recherche */
+.search-container {
+  width: 300px;
 }
 
 .top-nav {
@@ -228,7 +263,7 @@ html, body {
   width: 100%;
   padding: 2rem;
   box-sizing: border-box; 
-  padding-bottom: 4rem; /* Espace pour la pagination */
+  padding-bottom: 4rem;
 }
 
 .explorer-header {
@@ -277,11 +312,19 @@ html, body {
 
 @media (max-width: 768px) {
   .main-header {
-    padding: 0 1rem;
+    padding: 1rem;
     height: auto;
     flex-direction: column;
     gap: 1rem;
     padding-bottom: 1rem;
+  }
+  .header-right {
+    flex-direction: column-reverse; 
+    width: 100%;
+    gap: 1rem;
+  }
+  .search-container {
+    width: 100%; /* Pleine largeur sur mobile */
   }
   .books-grid {
     grid-template-columns: 1fr;

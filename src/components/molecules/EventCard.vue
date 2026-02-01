@@ -60,20 +60,8 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
           class="flat-button" 
           @click="emit('clickDetail')"
         >
-          LIRE UN EXTRAIT
+          VOIR LES DÉTAILS
         </Button>
-      </div>
-
-      <div class="card-footer">
-        <button class="footer-action">
-          <component :is="ICONS.ticket" size="18" /> 
-          Acheter
-        </button>
-
-        <button class="footer-action">
-          <component :is="ICONS.bookmark" size="18" />
-          Ajouter à ma liste
-        </button>
       </div>
     </div>
 
@@ -185,33 +173,6 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 }
 :deep(.flat-button:hover) {
   background-color: #ff7b2e;
-}
-
-/* --- FOOTER --- */
-.card-footer {
-  display: flex;
-  justify-content: space-between; /* Espace max entre les 2 boutons */
-  align-items: center;
-  padding: 0 1rem; /* Un peu de marge interne */
-}
-
-.footer-action {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #000;
-  padding: 8px 0;
-  transition: opacity 0.2s;
-}
-
-.footer-action:hover {
-  text-decoration: underline;
 }
 
 /* Mobile */
