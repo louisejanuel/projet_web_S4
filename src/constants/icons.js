@@ -11,8 +11,6 @@ import {
   Share2,
   Info,
   Ticket,
-  Music,
-  Drama,
   Filter,
   Settings,
   User,
@@ -32,7 +30,8 @@ import {
   Phone,
   Utensils,
   Bookmark,
-  CircleX
+  CircleX,
+  BookSearch,
 } from 'lucide-vue-next';
 
 export const ICONS = {
@@ -54,6 +53,7 @@ export const ICONS = {
   filter: Filter,
   image: Image,
   bookmark: Bookmark,
+  booksearch: BookSearch,
 
   // --- Objets Métier ---
   calendar: Calendar,
@@ -64,10 +64,6 @@ export const ICONS = {
   house: House,
   user: User,
   phone: Phone,
-
-  // --- Catégories ---
-  categoryMusic: Music,
-  categoryTheater: Drama,
 
   // --- Formulaire ---
   lock: Lock,

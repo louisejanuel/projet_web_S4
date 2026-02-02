@@ -101,7 +101,6 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 .img-container {
   width: 100%;
   background: #eee; 
-  /* Ombre portée simple pour donner du volume au livre */
   box-shadow: 4px 4px 0px rgba(0,0,0,0.1); 
 }
 
@@ -125,13 +124,12 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 
 .title-flat {
   margin: 0 0 4px 0;
-  font-family: 'Montserrat', sans-serif; /* Ou une font Serif pour faire plus "Livre" */
+  font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 1.3rem;
-  line-height: 1.2;
-  
+  line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -148,7 +146,7 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
   line-height: 1.6;
   color: #333;
   display: -webkit-box;
-  -webkit-line-clamp: 4; /* Limite à 4 lignes */
+  line-clamp: 4; /* Limite à 4 lignes */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

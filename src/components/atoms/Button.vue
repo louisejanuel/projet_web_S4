@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+// Assure-toi que le chemin vers tes icônes est correct
 import { ICONS } from '@/constants/icons'
 
 const props = defineProps({
@@ -7,7 +8,7 @@ const props = defineProps({
   iconName: { type: String, default: null },
   variant: {
     type: String,
-    default: 'primary', // primary, nav, link (NOUVEAU), ghost
+    default: 'primary', // primary, secondary, nav, link
   },
   isActive: { type: Boolean, default: false },
   fullWidth: { type: Boolean, default: false }
@@ -43,7 +44,7 @@ const classes = computed(() => {
 </template>
 
 <style scoped>
-/* --- BASE (inchangé) --- */
+/* --- BASE --- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -55,25 +56,27 @@ const classes = computed(() => {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  /* Valeurs par défaut pour les boutons "solides" */
+  
+  /* MODIFICATION ICI : Style "Flat" (Plat) */
   border: 2px solid #000;
-  box-shadow: 4px 4px 0px #000;
+  box-shadow: none; /* On enlève l'ombre portée */
   background: white;
   color: black;
   border-radius: 0px;
 }
 
+/* Au clic, on change juste un peu l'opacité ou la couleur au lieu de déplacer le bouton */
 .btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #000;
+  transform: none; /* Plus de déplacement */
+  box-shadow: none;
+  opacity: 0.9;
 }
 
 .btn--full {
   width: 100%;
-  justify-content: center;
 }
 
-/* --- VARIANTE : PRIMARY (inchangé) --- */
+/* --- VARIANTE : PRIMARY (Orange) --- */
 .btn--primary {
   background-color: #FF8F50; 
 }
@@ -81,10 +84,17 @@ const classes = computed(() => {
   background-color: #ff7b2e;
 }
 
-/* --- VARIANTE : NAV (Sidebar - tu peux garder ou supprimer si tu n'utilises plus) --- */
+/* --- VARIANTE : SECONDARY (Blanc/Gris clair pour les filtres) --- */
+.btn--secondary {
+  background-color: #fff;
+}
+.btn--secondary:hover {
+  background-color: #f0f0f0;
+}
+
+/* --- VARIANTE : NAV (Sidebar) --- */
 .btn--nav {
   border: 2px solid transparent;
-  box-shadow: none;
   background-color: transparent;
   color: #333;
   justify-content: flex-start;
@@ -97,38 +107,25 @@ const classes = computed(() => {
 .btn--nav.btn--active {
   background-color: #fff;
   border: 2px solid #000;
-  box-shadow: 4px 4px 0px #000;
 }
 
-/* --- NOUVELLE VARIANTE : LINK (Header Classique) --- */
+/* --- VARIANTE : LINK (Header) --- */
 .btn--link {
   background: transparent;
   border: none;
   box-shadow: none;
-  color: #666; /* Gris quand inactif */
-  padding: 0.5rem 0; /* Padding vertical réduit */
-  margin: 0 1rem;    /* Espacement entre les liens */
-  position: relative; /* Pour gérer la ligne */
+  color: #666;
+  padding: 0.5rem 0;
+  margin: 0 1rem;
 }
 
 .btn--link:hover {
   color: #000;
-  transform: none; /* Pas de mouvement au survol */
-  box-shadow: none;
 }
 
-.btn--link:active {
-  transform: none;
-  box-shadow: none;
-}
-
-/* L'état Actif : Texte noir + Ligne épaisse en dessous */
 .btn--link.btn--active {
   color: #000;
-  /* On utilise border-bottom pour l'effet souligné */
   border-bottom: 3px solid #000; 
-  /* On annule les styles par défaut */
-  box-shadow: none;
   background: transparent;
 }
 </style>
