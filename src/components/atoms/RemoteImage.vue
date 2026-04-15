@@ -12,7 +12,6 @@ const props = defineProps({
 const isLoading = ref(true)
 const hasError = ref(false)
 
-// si la source change, on reset les états
 watch(() => props.src, () => {
   isLoading.value = true
   hasError.value = false
@@ -51,7 +50,7 @@ const onError = () => {
   position: relative;
   width: 100%;
   background-color: #eee;
-  border: 2px solid #000; /* Le cadre noir de l'image */
+  border: 2px solid #000;
   overflow: hidden;
 }
 

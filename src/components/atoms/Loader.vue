@@ -6,7 +6,7 @@
 .loader {
   width: 24px;
   height: 24px;
-  border: 4px solid #000; /* Bordure noire épaisse */
+  border: 4px solid #000;
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;

@@ -2,7 +2,7 @@
 defineProps({
   thickness: {
     type: String,
-    default: '2px' // Épais par défaut pour ton style
+    default: '2px'
   },
   color: {
     type: String,

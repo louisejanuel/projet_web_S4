@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-// Assure-toi que le chemin vers tes icônes est correct
 import { ICONS } from '@/constants/icons'
 
 const props = defineProps({
@@ -57,17 +56,15 @@ const classes = computed(() => {
   cursor: pointer;
   transition: all 0.2s ease;
   
-  /* MODIFICATION ICI : Style "Flat" (Plat) */
   border: 2px solid #000;
-  box-shadow: none; /* On enlève l'ombre portée */
+  box-shadow: none;
   background: white;
   color: black;
   border-radius: 0px;
 }
 
-/* Au clic, on change juste un peu l'opacité ou la couleur au lieu de déplacer le bouton */
 .btn:active {
-  transform: none; /* Plus de déplacement */
+  transform: none;
   box-shadow: none;
   opacity: 0.9;
 }
@@ -76,7 +73,7 @@ const classes = computed(() => {
   width: 100%;
 }
 
-/* --- VARIANTE : PRIMARY (Orange) --- */
+/* PRIMARY */
 .btn--primary {
   background-color: #FF8F50; 
 }
@@ -84,7 +81,7 @@ const classes = computed(() => {
   background-color: #ff7b2e;
 }
 
-/* --- VARIANTE : SECONDARY (Blanc/Gris clair pour les filtres) --- */
+/* SECONDARY */
 .btn--secondary {
   background-color: #fff;
 }
@@ -92,7 +89,7 @@ const classes = computed(() => {
   background-color: #f0f0f0;
 }
 
-/* --- VARIANTE : NAV (Sidebar) --- */
+/* NAV */
 .btn--nav {
   border: 2px solid transparent;
   background-color: transparent;
@@ -109,7 +106,7 @@ const classes = computed(() => {
   border: 2px solid #000;
 }
 
-/* --- VARIANTE : LINK (Header) --- */
+/* LINK */
 .btn--link {
   background: transparent;
   border: none;
@@ -127,5 +124,16 @@ const classes = computed(() => {
   color: #000;
   border-bottom: 3px solid #000; 
   background: transparent;
+}
+
+@media (max-width: 768px) {
+  .btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+  .btn--link {
+    margin: 0 0.25rem;
+    padding: 0.25rem 0;
+  }
 }
 </style>

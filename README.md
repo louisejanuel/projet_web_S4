@@ -1,44 +1,37 @@
-# prog_web_S4
+# Prog_web_S4 - The Dog-Eared Page
 
 Voici le repository de mon projet de programmation Web fait dans le cadre du cours de M. Libert en 2026.
 
-## Recommended IDE Setup
+**Date :** 2026
+**Auteur :** Louise JANUEL - IMAC
+**Version en ligne :** [https://louisejanuel.github.io/projet_web_S4/](https://louisejanuel.github.io/projet_web_S4/)
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Présentation du projet
+Ce projet a été réalisé dans le cadre de l'évaluation du cours de **Programmation Web 3** encadré par M. Libert.
+Il s'agit d'une Single Page Application développée avec **Vue.js**, permettant aux utilisateurs d'explorer, de rechercher, de trier et de sauvegarder des livres. 
 
-## Recommended Browser Setup
+L'application exploite l'API publique **Google Books** pour récupérer les données en temps réel et utilise le stockage local du navigateur pour conserver la liste de lecture de l'utilisateur.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Instructions pour lancer le projet en local
 
-## Customize configuration
+**Pré-requis :** Vous devez disposer de Node.js installé sur votre machine.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Clonez le dépôt, ouvrez un terminal à la racine du projet et installez les paquets nécessaires :
 
-## Project Setup
-
-```sh
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+Tapez ensuite ceci pour lancer le projet :
 
-```sh
+```bash
 npm run dev
 ```
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+### Configuration de la clé API
+Pour des raisons de sécurité, la clé de l'API Google Books n'est pas incluse sur Github. Vous devez donc créer votre propre configuration locale :
+1. Créez un fichier `.env` à la racine du projet.
+2. Copiez/collez la ligne suivante à l'intérieur :
+```env
+VITE_GOOGLE_BOOKS_API_KEY=votre_cle_api_google_books_ici
 ```

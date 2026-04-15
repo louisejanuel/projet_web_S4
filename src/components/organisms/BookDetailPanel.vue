@@ -23,7 +23,6 @@ const stars = computed(() => {
   return '★'.repeat(Math.round(rating)) + '☆'.repeat(5 - Math.round(rating))
 })
 
-// CORRECTION 2 : Fonction sécurisée pour ouvrir le lien
 const handleOpenPreview = () => {
   if (props.book?.bookingUrl) {
     window.open(props.book.bookingUrl, '_blank')
@@ -126,14 +125,13 @@ const handleOpenPreview = () => {
 </template>
 
 <style scoped>
-/* --- OVERLAY --- */
 .panel-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.5); /* Un peu plus sombre */
+  background: rgba(0, 0, 0, 0.5);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -144,13 +142,12 @@ const handleOpenPreview = () => {
   pointer-events: all;
 }
 
-/* --- PANEL --- */
 .detail-panel {
   position: fixed;
   top: 0;
   right: 0;
   height: 100vh;
-  width: 40vw; /* Un peu plus large pour bien loger le header horizontal */
+  width: 40vw;
   min-width: 400px;
   max-width: 600px;
   
@@ -178,35 +175,33 @@ const handleOpenPreview = () => {
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 10; /* S'assure qu'il est au dessus */
+  z-index: 10;
 }
 
-/* CORRECTION 1 : HEADER HORIZONTAL */
 .panel-header {
   margin-top: 1rem;
   margin-bottom: 2rem;
   display: flex;
-  flex-direction: row; /* Aligné horizontalement */
+  flex-direction: row;
   gap: 1.5rem;
-  align-items: flex-start; /* Calé en haut */
+  align-items: flex-start;
 }
 
 .cover-wrapper {
-  width: 120px; /* Taille fixe pour l'image */
+  width: 120px;
   flex-shrink: 0;
   box-shadow: 5px 5px 0px rgba(0,0,0,0.15);
   border: 1px solid #000;
 }
 
 .header-info {
-  flex: 1; /* Prend le reste de la place */
+  flex: 1; 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 5px; /* Petit ajustement optique */
+  padding-top: 5px;
 }
 
-/* --- ACTIONS --- */
 .action-button-orange {
   background-color: #FF8F50 !important;
   color: #000 !important;
@@ -222,7 +217,7 @@ const handleOpenPreview = () => {
 
 .secondary-actions {
   display: flex;
-  justify-content: center; /* Centré */
+  justify-content: center;
   margin-top: 1.5rem;
   padding: 0.5rem;
 }
@@ -243,7 +238,6 @@ const handleOpenPreview = () => {
   transform: scale(0.95);
 }
 
-/* --- META GRID --- */
 .meta-grid {
   display: flex;
   flex-direction: column;
@@ -254,7 +248,7 @@ const handleOpenPreview = () => {
 .meta-row {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px dashed #ccc; /* Petit style sympa */
+  border-bottom: 1px dashed #ccc;
   padding-bottom: 0.5rem;
 }
 
@@ -269,14 +263,11 @@ const handleOpenPreview = () => {
   color: #000;
 }
 
-/* Mobile */
 @media (max-width: 600px) {
   .detail-panel {
     width: 90vw;
     min-width: auto;
   }
-  /* Sur mobile, on repasse en vertical si c'est trop serré ? 
-     Non, on garde horizontal mais on réduit l'image */
   .cover-wrapper {
     width: 90px;
   }

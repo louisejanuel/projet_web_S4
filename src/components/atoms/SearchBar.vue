@@ -1,5 +1,4 @@
 <script setup>
-// Props : Ce que le composant reçoit
 defineProps({
   modelValue: {
     type: String,
@@ -11,8 +10,6 @@ defineProps({
   }
 })
 
-// Emits : Les événements qu'il envoie au parent
-// 'update:modelValue' est nécessaire pour que v-model fonctionne
 const emit = defineEmits(['update:modelValue', 'search', 'clear'])
 
 const handleInput = (event) => {
@@ -46,19 +43,19 @@ const handleInput = (event) => {
 .search-wrapper {
   position: relative;
   width: 100%;
-  max-width: 300px; /* Largeur max par défaut */
+  max-width: 300px;
 }
 
 .search-input {
   width: 100%;
-  padding: 10px 40px 10px 15px; /* Place pour la croix à droite */
+  padding: 10px 40px 10px 15px;
   border: 2px solid #000;
   background: #FFFDF5;
-  font-family: 'Montserrat', sans-serif; /* Ou ta font globale */
+  font-family: 'Montserrat', sans-serif;
   font-size: 0.9rem;
   outline: none;
   border-radius: 0;
-  box-sizing: border-box; /* Important pour que le padding ne casse pas la largeur */
+  box-sizing: border-box;
   transition: background 0.2s;
 }
 

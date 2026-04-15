@@ -14,7 +14,6 @@ const emit = defineEmits(['update:modelValue'])
 const isOpen = ref(false)
 const dropdownRef = ref(null)
 
-// Gestion du clic extérieur pour fermer le menu
 const closeOnClickOutside = (e) => {
   if (dropdownRef.value && !dropdownRef.value.contains(e.target)) {
     isOpen.value = false
@@ -32,11 +31,9 @@ const handleSelection = (optionValue) => {
   let newValues = [...props.modelValue]
 
   if (props.singleSelect) {
-    // Mode unique (ex: Tri) : on remplace tout par la nouvelle valeur
     newValues = [optionValue]
-    isOpen.value = false // On ferme après le choix pour l'UX
+    isOpen.value = false
   } else {
-    // Mode multiple (ex: Catégories) : on ajoute ou on enlève
     if (newValues.includes(optionValue)) {
       newValues = newValues.filter(v => v !== optionValue)
     } else {
@@ -81,10 +78,9 @@ const handleSelection = (optionValue) => {
   display: inline-block;
 }
 
-/* Style du menu flottant */
 .dropdown-menu {
   position: absolute;
-  top: 110%; /* Juste en dessous du bouton */
+  top: 110%;
   left: 0;
   background-color: #FFFDF5;
   border: 2px solid #000;
@@ -108,7 +104,6 @@ const handleSelection = (optionValue) => {
   background-color: #FDF6E3;
 }
 
-/* Visuel Checkbox/Radio */
 .checkbox-visual {
   width: 18px;
   height: 18px;

@@ -8,7 +8,7 @@ import { ICONS } from '@/constants/icons'
 
 const props = defineProps({
   title: String,
-  subtitle: String, // Ce sera l'Auteur
+  subtitle: String,
   imageUrl: String,
   description: {
     type: String,
@@ -71,7 +71,6 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 </template>
 
 <style scoped>
-/* --- CONTENEUR --- */
 .book-card {
   display: flex;
   flex-direction: column;
@@ -82,16 +81,14 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
   padding: 0 0.5rem;
 }
 
-/* --- BODY --- */
 .card-body {
   display: flex;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-/* Visuel */
 .card-visual {
-  width: 100px; /* Largeur fixe livre */
+  width: 100px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -104,7 +101,6 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
   box-shadow: 4px 4px 0px rgba(0,0,0,0.1); 
 }
 
-/* Infos */
 .card-info {
   flex: 1;
   display: flex;
@@ -141,22 +137,20 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
 
 .desc-flat {
   margin-top: 0.5rem;
-  font-family: monospace; /* Style machine à écrire */
+  font-family: monospace;
   font-size: 0.85rem;
   line-height: 1.6;
   color: #333;
   display: -webkit-box;
-  line-clamp: 4; /* Limite à 4 lignes */
+  line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* --- BOUTON --- */
 .main-action-area {
   margin-bottom: 1rem; 
 }
 
-/* Force le style Flat Orange */
 :deep(.flat-button) {
   border-radius: 0 !important;
   box-shadow: none !important;
@@ -173,13 +167,12 @@ const emit = defineEmits(['toggleFavorite', 'clickDetail'])
   background-color: #ff7b2e;
 }
 
-/* Mobile */
 @media (max-width: 600px) {
   .card-body {
-    flex-direction: row; /* On garde l'alignement cote à cote même sur mobile pour les livres */
+    flex-direction: row;
   }
   .card-visual {
-    width: 80px; /* Un peu plus petit sur mobile */
+    width: 80px;
   }
 }
 </style>
